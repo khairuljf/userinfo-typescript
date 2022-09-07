@@ -14,8 +14,14 @@ function App() {
       phone:'',
       describe:''
     });
-
   const [contacts, setCotnacts] = useState<ContactType[]>([]);
+
+  const [editMode, setEditMode]= useState({
+    editMode:false,
+    data:{}
+  });
+
+  console.log(editMode)
 
  
 
@@ -43,9 +49,9 @@ function App() {
             <h1 className='text-center'>User Info</h1>
           </header>
           <div className='main-content'>
-               <UserForm setContact={setContact} contact={contact} handleContact={handleContact}  />
+               <UserForm setContact={setContact} contact={contact} handleContact={handleContact}   />
               <div className="result">
-                  <UserList contacts={contacts} setCotnacts={setCotnacts} />
+                  <UserList contacts={contacts} setCotnacts={setCotnacts} setEditMode={setEditMode} />
               </div>
           </div>
     </div>

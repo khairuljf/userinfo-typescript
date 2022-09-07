@@ -4,11 +4,15 @@ import {ContactType}  from '../ContactType';
 interface props{
     contacts:ContactType[];
     contact:ContactType;
-    setCotnacts:React.Dispatch<React.SetStateAction<ContactType[]>>
+    setCotnacts:React.Dispatch<React.SetStateAction<ContactType[]>>;
+    setEditMode:React.Dispatch<React.SetStateAction<{
+        editMode: boolean;
+        data: {};
+    }>>
 }
 
 
-const SingleUser:React.FC<props> = ({contacts, contact, setCotnacts}) => {
+const SingleUser:React.FC<props> = ({contacts, contact, setCotnacts, setEditMode}) => {
 
 
     const handleDelete = (id:string)=>{
@@ -29,7 +33,10 @@ const SingleUser:React.FC<props> = ({contacts, contact, setCotnacts}) => {
     <td>{contact.phone}</td>
     <td>{contact.describe}</td>
     <td>
-        <span className='edit'>Edit</span>
+        <span className='edit' onClick={(e)=> setEditMode({
+              editMode:true,
+              data:{...contact}
+            })}>Edit</span>
         <span className='delete' onClick={()=>handleDelete(contact.id)}>Delete</span>
     </td>
     </tr>

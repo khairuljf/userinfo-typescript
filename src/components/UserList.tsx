@@ -5,10 +5,14 @@ import SingleUser from './SingleUser';
 
 interface props{
     contacts:ContactType[];
-    setCotnacts:React.Dispatch<React.SetStateAction<ContactType[]>>
+    setCotnacts:React.Dispatch<React.SetStateAction<ContactType[]>>;
+    setEditMode:React.Dispatch<React.SetStateAction<{
+      editMode: boolean;
+      data: {};
+  }>>
 };
 
-const UserList:React.FC<props> = ({contacts, setCotnacts}) => {
+const UserList:React.FC<props> = ({contacts, setCotnacts, setEditMode}) => {
 
   return (
       <>
@@ -26,7 +30,7 @@ const UserList:React.FC<props> = ({contacts, setCotnacts}) => {
            
               {
 
-          contacts.map(contact=> <SingleUser key={contact.id} contact={contact}  contacts={contacts}  setCotnacts={setCotnacts}/>)
+          contacts.map(contact=> <SingleUser key={contact.id} contact={contact}  contacts={contacts}  setCotnacts={setCotnacts} setEditMode={setEditMode}/>)
 
                 // contacts.map((item)=>{
                 //   return(
