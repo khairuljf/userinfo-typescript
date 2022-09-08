@@ -7,7 +7,7 @@ interface props{
     setCotnacts:React.Dispatch<React.SetStateAction<ContactType[]>>;
     setEditMode:React.Dispatch<React.SetStateAction<{
         editMode: boolean;
-        data: {};
+        data: ContactType;
     }>>
 }
 
