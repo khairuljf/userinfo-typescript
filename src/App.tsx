@@ -66,11 +66,7 @@ function App() {
           }
         })
 
-        contact.id = '';
-        contact.name = '';
-        contact.email = '';
-        contact.phone = '';
-        contact.describe = '';
+    
 
       }else{
 
@@ -78,17 +74,10 @@ function App() {
     
       setCotnacts(prevState => [...prevState,newContact]);
 
-      contact.id = '';
-      contact.name = '';
-      contact.email = '';
-      contact.phone = '';
-      contact.describe = '';
-
       }
 
 
-
-
+      contact.id = contact.name = contact.email = contact.phone= contact.describe='';
 
   }
 
