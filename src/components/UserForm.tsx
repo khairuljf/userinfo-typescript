@@ -1,77 +1,91 @@
-import React from 'react'
+import React, { useState } from 'react'
+import uuid from 'react-uuid';
 import {ContactType}  from '../ContactType';
 
 interface props{
-  contact:{
-    id:string;
-    name:string,
-    email:string,
-    phone:string | number,
-    describe:string
-  };
-  setContact:React.Dispatch<React.SetStateAction<{
-    id:string;
-    name: string;
-    email: string;
-    phone: string | number;
-    describe: string;
-}>>;
-handleContact:React.FormEventHandler;
-editMode:{
-  editMode:boolean;
-  data:ContactType
-}
+  setCotnacts:React.Dispatch<React.SetStateAction<ContactType[]>>
+  setContact:React.Dispatch<React.SetStateAction<ContactType>>
+  contact:ContactType;
+  contacts:ContactType[]
 }
 
-const UserForm:React.FC<props> = ({contact, setContact, handleContact, editMode }) => {
+const UserForm:React.FC<props> = ({ contact, contacts,  setCotnacts, setContact }) => {
+
+
+
+  const handleSubmit = (e:React.FormEvent) =>{
+    e.preventDefault();
+
+    if(contact.id){
+      const newContact = {...contact}
+        setCotnacts(
+          contacts.map((contactList) => (contactList.id === contact.id ? { ...newContact } : contactList))
+        );
+
+    }else{
+
+      const newContact  = { ...contact, id:uuid(),  }
+      setCotnacts(prevState=> ([ ...prevState, newContact  ]));
+    }
+
+   
+
+    contact.id = contact.name = contact.email = contact.phone= contact.describe='';
+
+  } 
+
+
 
 
   return (
     <>
-    <form className='userform' onSubmit={handleContact}>
+    <form className='userform' onSubmit={handleSubmit}>
         <input 
         required
+            name="name"
             type="text" 
-            value={contact.name? contact.name: editMode.data.name } 
+            value={contact.name } 
             placeholder="Yor Name "  
-            onChange={(e)=> setContact({
-              ...contact,
+            onChange={(e)=> setContact(prevState=>({
+              ...prevState,
               name:e.target.value
-            })}
+            }))}
            
             />
 
 
         <input 
             required
+            name="email"
             type="email"  
             placeholder="Yor email"
-            value={contact.email? contact.email : editMode.data.email} 
+            value={contact.email} 
             
-            onChange={(e)=> setContact({
-              ...contact,
-              email:e.target.value
-            })}
+            onChange={(e)=> setContact(prevState=>({...prevState, email:e.target.value}))}
+
             />
 
 
         <input 
         required
+        name="phone"
             type="text"   
             placeholder="Yor Number"
-            value={contact.phone? contact.phone: editMode.data.phone}
-            onChange={(e)=> setContact({
-              ...contact,
+            value={contact.phone}
+            onChange={(e)=> setContact(prevState=>({
+              ...prevState,
               phone:e.target.value
-            })}
+            }))}
              />
+
         <textarea 
+            name="describe"
             placeholder='About Yourself'
-            value={contact.describe? contact.describe : editMode.data.describe}
-            onChange={(e)=> setContact({
-              ...contact,
+            value={contact.describe}
+            onChange={(e)=> setContact(prevState=>({
+              ...prevState,
               describe:e.target.value
-            })}
+            }))}
               ></textarea>
         <button type='submit'>{!contact.id ? "Add Contact" : "Update"}</button>
     </form>
